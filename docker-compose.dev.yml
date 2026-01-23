@@ -1,0 +1,13 @@
+services:
+  nsw-kafka:
+    image: apache/kafka
+    container_name: nsw-kafka
+    restart: unless-stopped
+    ports:
+      - "9092:9092"
+  bct-kafka:
+    image: apache/kafka
+    container_name: bct-kafka
+    restart: unless-stopped
+    ports:
+      - "9093:9092"
