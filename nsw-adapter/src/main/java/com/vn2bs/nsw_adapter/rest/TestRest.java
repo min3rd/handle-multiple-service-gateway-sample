@@ -1,0 +1,22 @@
+package com.vn2bs.nsw_adapter.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.vn2bs.nsw_adapter.services.SendMessageHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@RestController
+public class TestRest {
+    @Autowired
+    private SendMessageHandler sendMessageHandler;
+
+    @GetMapping("send")
+    public ResponseEntity<String> sendMessage(@RequestParam String message) {
+        sendMessageHandler.sendMessage("flow1-topic", message);
+        return ResponseEntity.ok().body("Message: " + message);
+    }
+
+}

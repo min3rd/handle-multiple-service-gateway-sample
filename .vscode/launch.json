@@ -9,6 +9,16 @@
             "projectName": "bct-adapter",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-NswAdapterApplication<nsw-adapter>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.vn2bs.nsw_adapter.NswAdapterApplication",
+            "projectName": "nsw-adapter",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }
