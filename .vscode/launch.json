@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-BctAdapterApplication<bct-adapter>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.vn2bs.bct_adapter.BctAdapterApplication",
+            "projectName": "bct-adapter",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
