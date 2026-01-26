@@ -11,3 +11,21 @@ services:
     restart: unless-stopped
     ports:
       - "9093:9092"
+  nsw-mysql:
+    image: mysql
+    container_name: nsw-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: nsw_adapter
+    ports:
+      - "3316:3306"
+  bct-mysql:
+    image: mysql
+    container_name: bct-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: bct_adapter
+    ports:
+      - "3326:3306"

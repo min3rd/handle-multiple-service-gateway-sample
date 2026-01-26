@@ -1,0 +1,20 @@
+package com.vn2bs.nsw_adapter.domains.ThuTuc1;
+
+import java.util.List;
+
+import com.vn2bs.nsw_adapter.domains.BaseEntity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name = "thutuc1_traloi")
+public class ThuTuc1_TraLoi extends BaseEntity<Long> {
+    private String maSoHoSo;
+    private String ketQua;
+    private String lyDo;
+    private String tenNguoiXuLy;
+    private List<String> taiLieuDinhKem;
+}
