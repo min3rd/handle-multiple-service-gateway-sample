@@ -17,7 +17,7 @@ import lombok.Data;
 public class ThuTuc1_TraLoi extends BaseEntity<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String maSoHoSo;
