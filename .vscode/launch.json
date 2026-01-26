@@ -1,24 +1,34 @@
 {
-    "configurations": [
-        {
-            "type": "java",
-            "name": "Spring Boot-BctAdapterApplication<bct-adapter>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "mainClass": "com.vn2bs.bct_adapter.BctAdapterApplication",
-            "projectName": "bct-adapter",
-            "args": "",
-            "envFile": "${workspaceFolder}/.env"
-        },
-        {
-            "type": "java",
-            "name": "Spring Boot-NswAdapterApplication<nsw-adapter>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "mainClass": "com.vn2bs.nsw_adapter.NswAdapterApplication",
-            "projectName": "nsw-adapter",
-            "args": "",
-            "envFile": "${workspaceFolder}/.env"
-        }
-    ]
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-BctGatewayApplication<bct-gateway>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.vn2bs.bct_gateway.BctGatewayApplication",
+      "projectName": "bct-gateway",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-BctAdapterApplication<bct-adapter>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.vn2bs.bct_adapter.BctAdapterApplication",
+      "projectName": "bct-adapter",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-NswAdapterApplication<nsw-adapter>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.vn2bs.nsw_adapter.NswAdapterApplication",
+      "projectName": "nsw-adapter",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
 }

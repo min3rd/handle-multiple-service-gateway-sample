@@ -15,7 +15,7 @@
 	<name>nsw-services</name>
 	<description>Mô phỏng 01 serivce xử lý đầu Hải quan</description>
 
-		<build>
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
