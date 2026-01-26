@@ -7,10 +7,23 @@
 		<groupId>com.vn2bs</groupId>
 		<artifactId>handle-multiple-service-gateway-sample</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<groupId>com.vn2bs</groupId>
 	<artifactId>nsw-services</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>nsw-services</name>
 	<description>Mô phỏng 01 serivce xử lý đầu Hải quan</description>
+
+		<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.vn2bs.nsw_services.NswServicesApplication</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
