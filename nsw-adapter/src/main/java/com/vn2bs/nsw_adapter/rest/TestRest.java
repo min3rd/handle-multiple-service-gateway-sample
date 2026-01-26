@@ -18,12 +18,12 @@ public class TestRest {
 
     @GetMapping("send")
     public ResponseEntity<String> sendMessage(@RequestParam String message) {
-        sendMessageHandler.sendMessage("flow1-topic", message);
+        sendMessageHandler.sendMessage("test-topic", message);
         return ResponseEntity.ok().body("Message: " + message);
     }
 
-    @KafkaListener(topics = "flow1-topic", groupId = "flow1")
+    @KafkaListener(topics = "test-topic", groupId = "test")
     public void listen(String message) {
-        System.out.println("Received Message in group 'flow1': " + message);
+        System.out.println("Received Message in group 'test': " + message);
     }
 }

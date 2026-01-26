@@ -14,4 +14,12 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>nsw-adapter</name>
 	<description>Adapter đầu Hải quan</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.vn2bs</groupId>
+			<artifactId>common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
 </project>
