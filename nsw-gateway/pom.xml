@@ -9,8 +9,8 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<groupId>com.vn2bs</groupId>
-	<artifactId>nsw-services</artifactId>
+	<artifactId>nsw-gateway</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>nsw-services</name>
+	<name>nsw-gateway</name>
 	<description>Nghiệp vụ xử lý đầu Hải quan</description>
 </project>

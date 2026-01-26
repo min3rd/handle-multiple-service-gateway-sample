@@ -113,7 +113,7 @@
     <modules>
         <module>common</module>
         <module>nsw-adapter</module>
-        <module>nsw-services</module>
+        <module>nsw-gateway</module>
         <module>bct-adapter</module>
         <module>bct-gateway</module>
     </modules>

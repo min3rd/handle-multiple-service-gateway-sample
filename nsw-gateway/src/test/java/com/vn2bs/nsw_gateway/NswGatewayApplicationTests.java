@@ -1,10 +1,10 @@
-package com.vn2bs.nsw_services;
+package com.vn2bs.nsw_gateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class NswServicesApplicationTests {
+class NswGatewayApplicationTests {
 
 	@Test
 	void contextLoads() {

@@ -32,11 +32,11 @@
     },
     {
       "type": "java",
-      "name": "Spring Boot-NswServicesApplication<nsw-services>",
+      "name": "Spring Boot-NswGatewayApplication<nsw-gateway>",
       "request": "launch",
       "cwd": "${workspaceFolder}",
-      "mainClass": "com.vn2bs.nsw_services.NswServicesApplication",
-      "projectName": "nsw-services",
+      "mainClass": "com.vn2bs.nsw_gateway.NswGatewayApplication",
+      "projectName": "nsw-gateway",
       "args": "",
       "envFile": "${workspaceFolder}/.env"
     }
