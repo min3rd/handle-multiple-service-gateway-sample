@@ -29,6 +29,16 @@
       "projectName": "nsw-adapter",
       "args": "",
       "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-NswServicesApplication<nsw-services>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.vn2bs.nsw_services.NswServicesApplication",
+      "projectName": "nsw-services",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
     }
   ]
 }
