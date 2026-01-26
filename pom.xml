@@ -118,7 +118,7 @@
         <module>bct-gateway</module>
     </modules>
 
-    <repositories>
+    <!-- <repositories>
         <repository>
             <id>spring-snapshots</id>
             <name>Spring Snapshots</name>
@@ -137,6 +137,6 @@
                 <enabled>false</enabled>
             </releases>
         </pluginRepository>
-    </pluginRepositories>
+    </pluginRepositories> -->
 
 </project>

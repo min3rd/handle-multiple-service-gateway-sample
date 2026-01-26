@@ -14,16 +14,4 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>nsw-adapter</name>
 	<description>Adapter đầu Hải quan</description>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<mainClass>com.vn2bs.nsw_adapter.NswAdapterApplication</mainClass>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>
