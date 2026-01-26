@@ -1,8 +1,8 @@
-package com.vn2bs.nsw_adapter.domains.ThuTuc1;
+package com.vn2bs.common.domains.ThuTuc1;
 
 import java.util.List;
 
-import com.vn2bs.nsw_adapter.domains.BaseEntity;
+import com.vn2bs.common.domains.BaseEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

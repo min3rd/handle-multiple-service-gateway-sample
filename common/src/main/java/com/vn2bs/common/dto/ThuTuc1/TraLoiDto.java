@@ -1,10 +1,10 @@
-package com.vn2bs.nsw_adapter.dto.ThuTuc1;
+package com.vn2bs.common.dto.ThuTuc1;
 
 import lombok.Data;
 
 /**
  * DTO for ThuTuc1 TraLoi
- * @link com.vn2bs.nsw_adapter.domains.ThuTuc1_TraLoi
+ * @link com.vn2bs.common.domains.ThuTuc1.ThuTuc1_TraLoi
  */
 
 @Data

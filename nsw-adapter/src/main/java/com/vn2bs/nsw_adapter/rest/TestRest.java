@@ -2,13 +2,16 @@ package com.vn2bs.nsw_adapter.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vn2bs.nsw_adapter.services.SendMessageHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
+@RequestMapping("test")
 public class TestRest {
     @Autowired
     private SendMessageHandler sendMessageHandler;
@@ -19,4 +22,8 @@ public class TestRest {
         return ResponseEntity.ok().body("Message: " + message);
     }
 
+    @KafkaListener(topics = "flow1-topic", groupId = "flow1")
+    public void listen(String message) {
+        System.out.println("Received Message in group 'flow1': " + message);
+    }
 }

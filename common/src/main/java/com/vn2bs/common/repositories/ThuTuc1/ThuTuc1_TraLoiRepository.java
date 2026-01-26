@@ -1,9 +1,9 @@
-package com.vn2bs.nsw_adapter.repositories;
+package com.vn2bs.common.repositories.ThuTuc1;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.vn2bs.nsw_adapter.domains.ThuTuc1.ThuTuc1_TraLoi;
+import com.vn2bs.common.domains.ThuTuc1.ThuTuc1_TraLoi;
 
 @Repository
 public interface ThuTuc1_TraLoiRepository extends JpaRepository<ThuTuc1_TraLoi, Long> {

@@ -1,4 +1,4 @@
-package com.vn2bs.nsw_adapter.config;
+package com.vn2bs.common.config;
 
 import java.util.HashMap;
 import java.util.Map;

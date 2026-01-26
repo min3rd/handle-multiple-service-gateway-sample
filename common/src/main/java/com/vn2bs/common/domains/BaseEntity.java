@@ -1,4 +1,4 @@
-package com.vn2bs.nsw_adapter.domains;
+package com.vn2bs.common.domains;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
