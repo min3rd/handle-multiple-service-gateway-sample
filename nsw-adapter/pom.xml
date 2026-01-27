@@ -16,8 +16,6 @@
 	<description>Adapter đầu Hải quan</description>
 
 	<properties>
-		<liquibase.version>4.33.0</liquibase.version>
-		<liquibase-maven-plugin.version>5.0.0</liquibase-maven-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -26,29 +24,12 @@
 			<artifactId>common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
-			<version>${liquibase.version}</version>
-		</dependency>
 	</dependencies>
 
 	<build>
 		<pluginManagement>
 			<plugins>
-				<plugin>
-					<groupId>com.liquibase</groupId>
-					<artifactId>liquibase-secure-maven-plugin</artifactId>
-					<version>${liquibase-maven-plugin.version}</version>
-					<configuration>
-						<!-- <propertyFile>liquibase.properties</propertyFile> -->
-						<changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
-						<url>jdbc:mysql://localhost:3316/nsw_adapter</url>
-						<driver>com.mysql.jdbc.Driver</driver>
-						<username>root</username>
-						<password>rootpassword</password>
-					</configuration>
-				</plugin>
+
 			</plugins>
 		</pluginManagement>
 	</build>
