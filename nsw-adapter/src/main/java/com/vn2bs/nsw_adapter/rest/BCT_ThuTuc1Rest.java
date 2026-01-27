@@ -9,9 +9,18 @@ import com.vn2bs.common.dto.ResponseFactory;
 import com.vn2bs.common.dto.ThuTuc1.TraLoiDto;
 import com.vn2bs.nsw_adapter.services.BCTMessageHandler;
 
+import io.minio.errors.ErrorResponseException;
+import io.minio.errors.InsufficientDataException;
+import io.minio.errors.InternalException;
+import io.minio.errors.InvalidResponseException;
+import io.minio.errors.ServerException;
+import io.minio.errors.XmlParserException;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +42,9 @@ public class BCT_ThuTuc1Rest {
     @PostMapping("tra-loi")
     public ResponseEntity<?> traLoi(@RequestPart(name = "thongTin") TraLoiDto thongTin,
             @RequestPart(required = false) MultipartFile vanBan,
-            @RequestPart(required = false) List<MultipartFile> tepDinhKem) {
+            @RequestPart(required = false) List<MultipartFile> tepDinhKem) throws InvalidKeyException,
+            ErrorResponseException, InsufficientDataException, InternalException, InvalidResponseException,
+            NoSuchAlgorithmException, ServerException, XmlParserException, IllegalArgumentException, IOException {
         log.info("BCT_ThuTuc1Rest - traLoi: {} {} {}", thongTin, vanBan.getOriginalFilename(),
                 tepDinhKem.stream().map(e -> e.getOriginalFilename()).reduce((a, b) -> a + "," + b).orElse(""));
         bctMessageHandler.ThuTuc1_TraLoi(thongTin, vanBan, tepDinhKem);

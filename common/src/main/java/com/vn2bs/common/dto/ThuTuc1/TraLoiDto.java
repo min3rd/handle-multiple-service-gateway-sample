@@ -4,6 +4,7 @@ import lombok.Data;
 
 /**
  * DTO for ThuTuc1 TraLoi
+ * 
  * @link com.vn2bs.common.domains.ThuTuc1.ThuTuc1_TraLoi
  */
 
