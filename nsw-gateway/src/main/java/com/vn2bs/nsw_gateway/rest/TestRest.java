@@ -1,11 +1,12 @@
-package com.vn2bs.nsw_adapter.rest;
+package com.vn2bs.nsw_gateway.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.vn2bs.nsw_adapter.services.SendMessageHandler;
+import com.vn2bs.nsw_gateway.services.SendMessageHandler;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

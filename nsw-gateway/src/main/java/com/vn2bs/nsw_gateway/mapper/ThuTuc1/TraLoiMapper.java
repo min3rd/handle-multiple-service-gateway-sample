@@ -1,4 +1,4 @@
-package com.vn2bs.nsw_adapter.mapper.ThuTuc1;
+package com.vn2bs.nsw_gateway.mapper.ThuTuc1;
 
 import org.mapstruct.Mapper;
 

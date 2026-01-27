@@ -1,4 +1,4 @@
-package com.vn2bs.nsw_adapter.services;
+package com.vn2bs.nsw_gateway.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;

@@ -196,7 +196,7 @@
                         </annotationProcessorPaths>
                     </configuration>
                 </plugin>
-                <plugin>
+                <!-- <plugin>
                     <groupId>org.liquibase</groupId>
                     <artifactId>liquibase-maven-plugin</artifactId>
                     <configuration>
@@ -215,7 +215,7 @@
                             </configuration>
                         </execution>
                     </executions>
-                </plugin>
+                </plugin> -->
             </plugins>
         </pluginManagement>
     </build>

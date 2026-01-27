@@ -32,8 +32,29 @@
 	</dependencies>
 
 	<build>
-		<plugins>
-
-		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.liquibase</groupId>
+					<artifactId>liquibase-maven-plugin</artifactId>
+					<configuration>
+						<propertyFile>liquibase.properties</propertyFile>
+					</configuration>
+					<executions>
+						<execution>
+							<id>auto</id>
+							<goals>
+								<goal>generateChangeLog</goal>
+							</goals>
+							<configuration>
+								<outputChangeLogFile>
+									src/main/resources/config/liquibase/changelog/${maven.build.timestamp}.xml
+								</outputChangeLogFile>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 </project>

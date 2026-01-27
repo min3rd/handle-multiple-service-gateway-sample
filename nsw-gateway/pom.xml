@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
@@ -13,4 +14,44 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>nsw-gateway</name>
 	<description>Nghiệp vụ xử lý đầu Hải quan</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.vn2bs</groupId>
+			<artifactId>common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.liquibase</groupId>
+					<artifactId>liquibase-maven-plugin</artifactId>
+					<configuration>
+						<propertyFile>liquibase.properties</propertyFile>
+					</configuration>
+					<executions>
+						<execution>
+							<id>auto</id>
+							<goals>
+								<goal>generateChangeLog</goal>
+							</goals>
+							<configuration>
+								<outputChangeLogFile>
+									src/main/resources/config/liquibase/changelog/${maven.build.timestamp}.xml
+								</outputChangeLogFile>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>

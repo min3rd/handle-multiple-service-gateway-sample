@@ -1,0 +1,37 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="admin (generated)" id="1769487881198-1">
+        <createTable tableName="thutuc1_guihoso">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="ma_so_ho_so" type="VARCHAR(255)"/>
+            <column name="tai_lieu_dinh_kem" type="JSON"/>
+            <column name="ten_nguoi_gui" type="VARCHAR(255)"/>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="created_date" type="datetime(6)"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column name="last_modified_date" type="datetime(6)"/>
+            <column name="status" type="ENUM('COMPLETED', 'CREATED', 'FAILED', 'PROCESSING')"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="admin (generated)" id="1769487881198-2">
+        <createTable tableName="thutuc1_traloi">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="ket_qua" type="VARCHAR(255)"/>
+            <column name="ly_do" type="VARCHAR(255)"/>
+            <column name="ma_so_ho_so" type="VARCHAR(255)"/>
+            <column name="tai_lieu_dinh_kem" type="JSON"/>
+            <column name="ten_nguoi_xu_ly" type="VARCHAR(255)"/>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="created_date" type="datetime(6)"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column name="last_modified_date" type="datetime(6)"/>
+            <column name="status" type="ENUM('COMPLETED', 'CREATED', 'FAILED', 'PROCESSING')"/>
+            <column name="bucket_name" type="VARCHAR(255)"/>
+            <column name="van_ban" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
