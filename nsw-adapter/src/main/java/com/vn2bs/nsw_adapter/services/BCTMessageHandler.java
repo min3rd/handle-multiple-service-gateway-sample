@@ -6,9 +6,11 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.vn2bs.common.config.GlobalConfig;
 import com.vn2bs.common.domains.Status;
 import com.vn2bs.common.domains.ThuTuc1.ThuTuc1_TraLoi;
 import com.vn2bs.common.dto.ThuTuc1.TraLoiDto;
@@ -39,6 +41,9 @@ public class BCTMessageHandler {
 
     @Autowired
     private TraLoiMapper traLoiMapper;
+
+    @Autowired
+    private KafkaTemplate<String, ThuTuc1_TraLoi> kafkaTemplate;
 
     public void ThuTuc1_TraLoi(TraLoiDto message, MultipartFile vanBan, List<MultipartFile> tepDinhKem)
             throws InvalidKeyException, ErrorResponseException, InsufficientDataException, InternalException,
@@ -90,5 +95,12 @@ public class BCTMessageHandler {
         }
         entity = traLoiRepository.save(entity);
         log.info("Saved TraLoi entity: {}", entity);
+
+        try {
+            kafkaTemplate.send(GlobalConfig.Kafka.Topic.BCT.ThuTuc1.TRA_LOI, entity);
+
+        } catch (Exception ex) {
+            log.error("Error sending message to Kafka for TraLoi id={} error={}", entity.getId(), ex.getMessage());
+        }
     }
 }

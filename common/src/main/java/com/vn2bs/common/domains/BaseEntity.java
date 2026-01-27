@@ -1,5 +1,6 @@
 package com.vn2bs.common.domains;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import org.springframework.data.annotation.CreatedBy;
@@ -18,7 +19,7 @@ import lombok.Data;
 @Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BaseEntity<T> {
+public abstract class BaseEntity<T> implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private Status status = Status.CREATED;
