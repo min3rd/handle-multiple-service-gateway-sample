@@ -5,7 +5,8 @@ public interface GlobalConfig {
         public interface Topic {
             public interface BCT {
                 public interface ThuTuc1 {
-                    String TRA_LOI = "bct-thutuc1-traloi";
+                    public final String TRA_LOI = "bct-thutuc1-traloi";
+                    public final String TRA_LOI_WS = "bct-thutuc1-traloi-ws";
                 }
             }
         }

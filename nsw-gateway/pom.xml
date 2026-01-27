@@ -15,10 +15,6 @@
 	<name>nsw-gateway</name>
 	<description>Nghiệp vụ xử lý đầu Hải quan</description>
 
-	<properties>
-		<jaxb2-maven-plugin.version>3.1.0</jaxb2-maven-plugin.version>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>com.vn2bs</groupId>
