@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.vn2bs.common.domains.Status;
 import com.vn2bs.common.domains.ThuTuc1.ThuTuc1_TraLoi;
 import com.vn2bs.common.dto.ThuTuc1.TraLoiDto;
 import com.vn2bs.common.repositories.ThuTuc1.ThuTuc1_TraLoiRepository;
@@ -45,38 +46,49 @@ public class BCTMessageHandler {
             IllegalArgumentException, IOException {
         log.info("message={} vanBan={} tepDinhKem={}", message, vanBan.getOriginalFilename(),
                 tepDinhKem.stream().map(e -> e.getOriginalFilename()).reduce((a, b) -> a + "," + b).orElse(""));
+
         ThuTuc1_TraLoi entity = traLoiMapper.toEntity(message);
-        entity = traLoiRepository.save(entity);
-        log.info("Saved TraLoi entity: {}", entity);
+
+        entity.setStatus(Status.CREATED);
 
         final String bucketName = NameUtil.toBucketNameSafe("bct-thutuc1-traloi", message.getMaSoHoSo());
+        entity.setBucketName(bucketName);
         if (!minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build())) {
             minioClient.makeBucket(
                     MakeBucketArgs.builder().bucket(bucketName).build());
         }
 
         if (vanBan != null && !vanBan.isEmpty()) {
+            final String vanBanName = NameUtil.toFileNameSafe("vanBan_", vanBan.getOriginalFilename());
             minioClient.putObject(io.minio.PutObjectArgs.builder()
                     .bucket(bucketName)
-                    .object(NameUtil.toFileNameSafe("vanBan_", vanBan.getOriginalFilename()))
+                    .object(vanBanName)
                     .stream(vanBan.getInputStream(), vanBan.getSize(), -1)
                     .contentType(vanBan.getContentType())
                     .build());
             log.info("Uploaded vanBan: {}", vanBan.getOriginalFilename());
+            entity.setVanBan(vanBanName);
         }
 
         if (tepDinhKem != null && tepDinhKem.size() > 0) {
             for (MultipartFile file : tepDinhKem) {
                 if (file != null && !file.isEmpty()) {
+                    final String fileName = NameUtil.toFileNameSafe("tepDinhKem_", file.getOriginalFilename());
                     minioClient.putObject(io.minio.PutObjectArgs.builder()
                             .bucket(bucketName)
-                            .object(NameUtil.toFileNameSafe("tepDinhKem_", file.getOriginalFilename()))
+                            .object(fileName)
                             .stream(file.getInputStream(), file.getSize(), -1)
                             .contentType(file.getContentType())
                             .build());
                     log.info("Uploaded tepDinhKem: {}", file.getOriginalFilename());
+                    if (entity.getTaiLieuDinhKem() == null) {
+                        entity.setTaiLieuDinhKem(new java.util.ArrayList<>());
+                    }
+                    entity.getTaiLieuDinhKem().add(fileName);
                 }
             }
         }
+        entity = traLoiRepository.save(entity);
+        log.info("Saved TraLoi entity: {}", entity);
     }
 }

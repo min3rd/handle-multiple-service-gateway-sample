@@ -1,13 +1,39 @@
 package com.vn2bs.common.domains;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import java.sql.Timestamp;
+
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class BaseEntity<T> {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private T id;
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+public abstract class BaseEntity<T> {
+
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.CREATED;
+
+    @CreatedBy
+    private String createdBy;
+
+    @CreatedDate
+    @NotNull
+    private Timestamp createdDate;
+
+    @LastModifiedBy
+    private String lastModifiedBy;
+
+    @LastModifiedDate
+    @NotNull
+    private Timestamp lastModifiedDate;
 }
