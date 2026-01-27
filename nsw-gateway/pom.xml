@@ -15,6 +15,10 @@
 	<name>nsw-gateway</name>
 	<description>Nghiệp vụ xử lý đầu Hải quan</description>
 
+	<properties>
+		<jaxb2-maven-plugin.version>3.1.0</jaxb2-maven-plugin.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.vn2bs</groupId>
@@ -29,29 +33,47 @@
 	</dependencies>
 
 	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.liquibase</groupId>
-					<artifactId>liquibase-maven-plugin</artifactId>
-					<configuration>
-						<propertyFile>liquibase.properties</propertyFile>
-					</configuration>
-					<executions>
-						<execution>
-							<id>auto</id>
-							<goals>
-								<goal>generateChangeLog</goal>
-							</goals>
-							<configuration>
-								<outputChangeLogFile>
-									src/main/resources/config/liquibase/changelog/${maven.build.timestamp}.xml
-								</outputChangeLogFile>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-maven-plugin</artifactId>
+				<configuration>
+					<propertyFile>liquibase.properties</propertyFile>
+				</configuration>
+				<executions>
+					<execution>
+						<id>auto</id>
+						<goals>
+							<goal>generateChangeLog</goal>
+						</goals>
+						<configuration>
+							<outputChangeLogFile>
+								src/main/resources/config/liquibase/changelog/${maven.build.timestamp}.xml
+							</outputChangeLogFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>${jaxb2-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>xjc</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<sources>
+						<source>src/main/resources/xsd/countries.xsd</source>
+					</sources>
+					<outputDirectory>src/main/java</outputDirectory>
+					<clearOutputDir>false</clearOutputDir>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 </project>
