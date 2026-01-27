@@ -1,7 +1,11 @@
 package com.vn2bs.nsw_adapter.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.vn2bs.common.domains.ThuTuc1.ThuTuc1_TraLoi;
 import com.vn2bs.common.dto.ThuTuc1.TraLoiDto;
 import com.vn2bs.common.repositories.ThuTuc1.ThuTuc1_TraLoiRepository;
@@ -23,7 +27,7 @@ public class BCTMessageHandler {
     @Autowired
     private TraLoiMapper traLoiMapper;
 
-    public void ThuTuc1_TraLoi(TraLoiDto message) {
+    public void ThuTuc1_TraLoi(TraLoiDto message, MultipartFile vanBan, List<MultipartFile> tepDinhKem) {
         log.info("Processing TraLoi message: {}", message);
 
         ThuTuc1_TraLoi entity = traLoiMapper.toEntity(message);
