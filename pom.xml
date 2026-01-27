@@ -30,8 +30,7 @@
         <minio.version>8.5.2</minio.version>
         <springdoc.version>2.8.5</springdoc.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <maven.build.timestamp.format>yyyyMMdd_HHmmss</maven.build.timestamp.format>
-        <liquibase.changeDescription>update</liquibase.changeDescription>
+        <maven.build.timestamp.format>yyyyMMdd-HHmmss</maven.build.timestamp.format>
     </properties>
 
     <dependencies>
@@ -211,7 +210,7 @@
                             </goals>
                             <configuration>
                                 <outputChangeLogFile>
-                                    src/main/resources/config/liquibase/changelog/${maven.build.timestamp}-${liquibase.changeDescription}.xml
+                                    src/main/resources/config/liquibase/changelog/${maven.build.timestamp}.xml
                                 </outputChangeLogFile>
                             </configuration>
                         </execution>
