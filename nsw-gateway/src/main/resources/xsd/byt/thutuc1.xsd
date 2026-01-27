@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="com.vn2bs.webservices.byt.thutuc1"
+    targetNamespace="com.vn2bs.webservices.byt.thutuc1" elementFormDefault="qualified">
+    <xs:element name="TraLoiRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="maSoHoSo" type="xs:string" />
+                <xs:element name="ketQua" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="TraLoiResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="maSoHoSo" type="xs:string" />
+                <xs:element name="ketQua" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
