@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:tns="com.vn2bs.webservices.byt.thutuc1"
-    targetNamespace="com.vn2bs.webservices.byt.thutuc1" elementFormDefault="qualified">
+    xmlns:tns="thutuc1.byt.xsd.nsw_gateway.vn2bs.com"
+    targetNamespace="thutuc1.byt.xsd.nsw_gateway.vn2bs.com" elementFormDefault="qualified">
     <xs:element name="TraLoiRequest">
         <xs:complexType>
             <xs:sequence>

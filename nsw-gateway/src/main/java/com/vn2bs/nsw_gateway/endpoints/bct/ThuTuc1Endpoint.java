@@ -5,14 +5,15 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import com.vn2bs.nsw_gateway.xsd.bct.thutuc1.TraLoiRequest;
+import com.vn2bs.nsw_gateway.xsd.bct.thutuc1.TraLoiResponse;
+
 import lombok.extern.slf4j.Slf4j;
-import thutuc1.bct.webservices.vn2bs.com.TraLoiRequest;
-import thutuc1.bct.webservices.vn2bs.com.TraLoiResponse;
 
 @Endpoint
 @Slf4j
 public class ThuTuc1Endpoint {
-    @PayloadRoot(namespace = "com.vn2bs.webservices.bct.thutuc1", localPart = "TraLoiRequest")
+    @PayloadRoot(namespace = "thutuc1.bct.xsd.nsw_gateway.vn2bs.com", localPart = "TraLoiRequest")
     @ResponsePayload
     public TraLoiResponse traLoi(@RequestPayload TraLoiRequest request) {
         log.info("traLoi request={}", request);
