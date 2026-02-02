@@ -29,6 +29,33 @@ graph TD
     Kafka -- "Listener" --> Adapter
 ```
 
+### Luồng xử lý REST API (REST API Flow)
+Chi tiết luồng xử lý bản tin REST API tại `nsw-gateway` (VD: API `tra-loi`):
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Controller as BCT_ThuTuc1Rest
+    participant Service as BCTMessageHandler
+    participant MinIO
+    participant DB as MySQL
+    participant Kafka
+
+    Client->>Controller: POST /bct/thu-tuc-1/tra-loi (Multipart)
+    Controller->>Service: ThuTuc1_TraLoi(thongTin, files)
+    
+    par Upload Files
+        Service->>MinIO: Create Bucket (if not exists)
+        Service->>MinIO: Put Object (VanBan, TepDinhKem)
+    end
+
+    Service->>DB: Save Entity (Status=CREATED)
+    Service->>Kafka: Send Message (Topic: TRA_LOI)
+    
+    Service-->>Controller: void
+    Controller-->>Client: 200 OK
+```
+
 # Hướng dẫn phát triển dự án NSW
 
 Tài liệu này hướng dẫn chi tiết cách cài đặt môi trường, chạy debug và sử dụng các công cụ phát triển cho dự án.
