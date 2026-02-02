@@ -1,3 +1,34 @@
+# Mô hình giao tiếp (Communication Model)
+
+Mô tả luồng dữ liệu giữa các dịch vụ trong hệ thống:
+
+```mermaid
+graph TD
+    %% Styling
+    classDef service fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef infra fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    classDef client fill:#fff3e0,stroke:#ff6f00,stroke-width:2px
+
+    %% Nodes
+    Client[SoapUI Client]:::client
+
+    subgraph "Services (application.properties)"
+        Gateway["nsw-gateway<br/>(Port: 8084)"]:::service
+        Adapter["nsw-adapter<br/>(Port: 8083)"]:::service
+    end
+
+    subgraph "Infrastructure (docker-compose.dev.yml)"
+        Kafka["Kafka<br/>(Port: 9092)"]:::infra
+        MySQL["MySQL<br/>(Port: 3316)<br/>DB: nsw_adapter"]:::infra
+    end
+
+    %% Reltionships
+    Client -- "XML Request" --> Gateway
+    Gateway -- "Produce Message" --> Kafka
+    Gateway -- "Persist Data" --> MySQL
+    Kafka -- "Listener" --> Adapter
+```
+
 # Hướng dẫn phát triển dự án NSW
 
 Tài liệu này hướng dẫn chi tiết cách cài đặt môi trường, chạy debug và sử dụng các công cụ phát triển cho dự án.
