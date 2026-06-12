@@ -151,6 +151,60 @@ curl -X POST \
 
 ---
 
+## 5. Cơ chế đảm bảo tính nhất quán dữ liệu và xử lý lỗi (Data Consistency & Error Handling)
+
+Trong môi trường thực tế, việc trao đổi bản tin nghiệp vụ giữa **NSW** và **BCT** dễ gặp phải các sự cố như: mất kết nối mạng, dịch vụ phía nhận bị downtime, lỗi xác thực chữ ký số, hoặc lỗi logic nghiệp vụ dẫn đến trạng thái hồ sơ bị lệch giữa hai bên (ví dụ: NSW ghi nhận hồ sơ đã gửi nhưng BCT chưa nhận được, hoặc BCT đã duyệt nhưng NSW chưa cập nhật kết quả).
+
+Dự án áp dụng các cơ chế sau để kiểm soát và giải quyết các lỗi trên:
+
+### 5.1. Cơ chế Retry và xử lý hàng đợi qua Kafka (Kafka Consumer Retry & DLQ)
+
+Khi nhận bản tin nghiệp vụ (SOAP XML) thành công ở Gateway, bản tin được lưu vào cơ sở dữ liệu và đẩy vào hàng đợi **Kafka** để xử lý bất đồng bộ ở tầng **Adapter** nhằm tránh nghẽn luồng HTTP. Khi tầng Adapter xử lý gặp lỗi, hệ thống áp dụng cơ chế phân loại lỗi và xử lý lại:
+
+```mermaid
+flowchart TD
+    Msg[Bản tin nghiệp vụ nhận từ Kafka] --> Process{Xử lý nghiệp vụ tại Adapter}
+    Process -- Thành công --> Done[Cập nhật trạng thái thành công]
+    Process -- Lỗi logic nghiệp vụ<br/>Không thể xử lý lại --> DLQ[Đẩy vào Dead Letter Queue - DLQ Topic]
+    Process -- Lỗi kết nối DB/Downtime dịch vụ ngoài<br/>Lỗi tạm thời có thể phục hồi --> Retry{Chưa vượt quá số lần Retry tối đa?}
+    Retry -- Đúng --> RetryTopic[Đẩy vào Retry Topic<br/>với Backoff Delay] --> Msg
+    Retry -- Sai --> DLQ
+    DLQ --> Audit[Ghi nhận vào log lỗi & Gửi cảnh báo hệ thống]
+```
+
+*   **Lỗi tạm thời (Transient Errors - ví dụ: Mất kết nối database tạm thời, dịch vụ phụ trợ downtime):** Bản tin được chuyển sang **Retry Topic** để xử lý lại với cơ chế **Exponential Backoff** (tăng dần thời gian giãn cách giữa các lần retry) nhằm tránh làm quá tải hệ thống nhận.
+*   **Lỗi không thể phục hồi (Non-recoverable Errors - ví dụ: Sai định dạng dữ liệu, sai schema XSD, lỗi chữ ký số không hợp lệ):** Bản tin sẽ được đẩy thẳng vào **Dead Letter Queue (DLQ Topic)**. Việc này đảm bảo hàng đợi chính không bị tắc nghẽn (Head-of-Line Blocking).
+*   **Giám sát DLQ:** Các kỹ sư vận hành có thể giám sát DLQ, phân tích nguyên nhân lỗi, sửa đổi dữ liệu hoặc cấu hình và phát lại bản tin (Replay Message) khi dịch vụ ổn định.
+
+### 5.2. Quản lý bản tin gửi/nhận bằng Mã giao dịch duy nhất (Correlation ID & Message Transaction Log)
+
+Để tránh tình trạng mất mát thông tin và phục vụ đối soát, toàn bộ vòng đời của một hồ sơ hành chính được theo dõi qua:
+
+1.  **Correlation ID (Mã định danh giao dịch):**
+    *   Mỗi khi Doanh nghiệp khởi tạo hồ sơ, hệ thống tự động sinh một mã định danh duy nhất (`Correlation ID` hay `Message ID`).
+    *   Mã này được đính kèm vào SOAP Header của tất cả các bản tin XML và là khóa chính để ghi nhận thông tin trong Kafka Message Header cũng như logs của các dịch vụ.
+2.  **Nhật ký giao dịch bản tin (Message Transaction Log):**
+    *   Bảng `message_log` được xây dựng ở cả 2 cơ sở dữ liệu (`nsw_adapter` và `bct_adapter`) để ghi nhận lịch sử gửi/nhận:
+        *   `message_id`, `correlation_id`, `sender`, `receiver`, `message_type` (Gửi hồ sơ / Trả kết quả).
+        *   `payload_xml` (Nội dung XML gốc để phục vụ đối chiếu/pháp lý).
+        *   `status` (`SENT`, `RECEIVED`, `PROCESSED_SUCCESS`, `PROCESSED_FAILED`).
+        *   `error_detail` (Chi tiết lỗi khi xử lý thất bại).
+    *   Trước khi xử lý bản tin mới nhận, hệ thống kiểm tra trạng thái trong `message_log` dựa trên `correlation_id` để tránh việc xử lý lặp lại (Idempotency Control).
+
+### 5.3. Kiểm soát dịch chuyển trạng thái (State Machine Control)
+
+*   Hệ thống quy định máy trạng thái (State Machine) chặt chẽ cho hồ sơ. 
+*   Ví dụ: Trạng thái hồ sơ tại NSW chỉ được chuyển từ `CHỜ_PHÊ_DUYỆT` sang `ĐÃ_PHÊ_DUYỆT` khi nhận được bản tin SOAP hợp lệ có chữ ký số xác nhận từ BCT. 
+*   Các bản tin đến sai thứ tự hoặc có trạng thái không hợp lệ với logic nghiệp vụ hiện tại (ví dụ: nhận bản tin trả kết quả cho một hồ sơ đang ở trạng thái `ĐÃ_HỦY`) sẽ bị từ chối ngay lập tức tại tầng Gateway và ghi log cảnh báo lệch trạng thái.
+
+### 5.4. Cơ chế Đối soát định kỳ (Reconciliation Engine)
+
+*   Cuối mỗi ngày hoặc theo chu kỳ quy định, một tiến trình chạy ngầm (Reconciliation Job) sẽ thực hiện đối soát tự động danh sách các hồ sơ đang xử lý giữa hai cổng.
+*   Tiến trình này sẽ so sánh trạng thái của các hồ sơ có cùng `correlation_id` giữa hai cơ sở dữ liệu `nsw_adapter` và `bct_adapter`.
+*   Nếu phát hiện sự không đồng nhất về trạng thái (ví dụ: Bên BCT đã phê duyệt được 2 giờ nhưng bên NSW vẫn ở trạng thái `CHỜ_PHÊ_DUYỆT`), hệ thống sẽ phát tín hiệu cảnh báo (Discrepancy Alert) và tự động kích hoạt tiến trình gửi lại kết quả (Auto-Replay) từ BCT sang NSW để đồng bộ trạng thái.
+
+---
+
 # Hướng dẫn phát triển dự án NSW
 
 Tài liệu này hướng dẫn chi tiết cách cài đặt môi trường, chạy debug và sử dụng các công cụ phát triển cho dự án.
